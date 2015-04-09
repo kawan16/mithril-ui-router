@@ -1,10 +1,13 @@
 
 /* global m */
+
+//namespace
+
+
 ;( function( m ) {
     'use strict';
 
-    //namespace
-    var mx = mx ||  {};
+    window.mx = window.mx ||  {};
 
     /* Private variables */
     var initialState ,
@@ -32,49 +35,51 @@
      * @param _params_  The state parameters
      */
     mx.go = function( _state_ , _params_ ) {
-        var normalizedState = $normalizeState( _state_ ),
-            splitState = normalizedState.split( '.' ),
+        // Initial variables
+        var splitState = _state_.split( '.' ),
             runningState = '',
             runningPlace = document;
         currentStateParams =  _params_;
+        // Loop over composing partial states
         splitState.forEach( function( partialState ) {
             runningState = runningState ? runningState + '.' + partialState : partialState;
             var configuration = routes[ runningState ],
                 module = $module(  configuration.module ),
-                place = runningPlace.querySelector( '#' + configuration.place );
+                place = runningPlace.querySelector( '#' + configuration.place),
+                places = configuration.places;
             runningPlace = place;
+            // Set up module(s)
             if( ! currentState || currentState.indexOf( runningState ) === -1 ) {
-                m.module( place , module );
+                if( place ) { m.module( place , module ); }
+                else if( places ) {
+                    for( var key in places ) {
+                        module = $module( places[ key ] );
+                        place = runningPlace.querySelector( '#' + key );
+                        m.module( place , module );
+                    }
+                }
             }
         });
-        currentState = normalizedState;
+        currentState = _state_;
     };
 
     /**
      * Returns the value of the specified parameter
      * @param _key_     The attribute key
-     * @returns {}
+     * @returns {value}
      */
     mx.param = function( _key_ ) {
         currentStateParams = currentStateParams || {};
         return currentStateParams[ _key_ ];
     };
 
-    var $module = function( path ) {
+    var $module = function( _path_ ) {
+        if( ! _path_ ) { return; }
         var result = app,
-            splitPath = path.split( '.' );
+            splitPath = _path_.split( '.' );
         splitPath.forEach( function( pathPart ) {
             result = result[ pathPart ];
         });
-        return result;
-    };
-
-    var $normalizeState = function( _state_ ) {
-        var result = _state_;
-        if( result.indexOf('*') === 0 ) {
-            result = result.substring( 1 );
-            result = currentState + result;
-        }
         return result;
     };
 
