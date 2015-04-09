@@ -1,0 +1,8 @@
+# Node
+node_modules
+
+# Tmp folder
+.tmp
+
+# Editor
+.idea
