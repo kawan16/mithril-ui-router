@@ -63,7 +63,7 @@ module.exports = function (grunt) {
 
         // Testing via jasmine
         jasmine: {
-            src: [ '<%= config.lib %>/**/*.js' , '<%= config.src %>/mithril-ui-router.js'  ],
+            src: [ '<%= config.lib %>/**/*.js' ,  '<%= config.src %>/mithril-ui-router.js'  ],
             options: {
                 specs : '<%= config.test %>/**/*.js'
             }
