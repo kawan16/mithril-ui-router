@@ -72,7 +72,7 @@
     mx.route = function( _app_ , _initialState_ , _routes_ ) {
         app             = validators.plainObject( _app_ );
         initialState    = validators.string( _initialState_ );
-        routes          = validators.string( _routes_ );
+        routes          = validators.plainObject( _routes_ );
         mx.route.go( initialState );
     };
 
@@ -82,6 +82,7 @@
      * @param {object} _params_  The state parameters
      */
     mx.route.go = function( _state_ , _params_ ) {
+
         // Check parameters
         validators.string( _state_ );
 
