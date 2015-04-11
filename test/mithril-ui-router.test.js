@@ -9,7 +9,6 @@ var routeSample = {
         place: 'app'
     },
     'A.A1' : {
-        url: '/',
         module: 'a1',
         place: 'child'
     },
@@ -78,6 +77,11 @@ describe('mx.route.go()' , function() {
         expect( call( 156 ) ).toThrowError( TypeError );
     });
 
+    it( 'should set up the state module in its related place' , function( ) {
+        mx.route( appSample , 'A' , routeSample );
+        mx.route.go( 'B' );
+    });
+
 });
 
 /* Current method tests */
@@ -110,5 +114,12 @@ describe('mx.route.param()' , function() {
         expect( typeof mx.route.param ).toBe( 'function' );
     });
 
+    it( 'should return the value of the given state parameter' , function() {
+        var stateParameters = { some: 'state parameter' , and: 122 };
+        mx.route( appSample , 'A' , routeSample );
+        mx.route.go( 'B' , stateParameters );
+        expect( mx.route.param( 'some') ).toEqual( 'state parameter' );
+        expect( mx.route.param( 'and' ) ).toEqual( 122 );
+    });
 
 });
