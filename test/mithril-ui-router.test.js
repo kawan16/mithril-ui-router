@@ -1,7 +1,37 @@
 
 /* global describe, it, expect */
 
-/* Route method */
+/* Data sample */
+var routeSample = {
+    'A' : {
+        url: '/',
+        module: 'a',
+        place: 'app'
+    },
+    'A.A1' : {
+        url: '/',
+        module: 'a1',
+        place: 'child'
+    },
+    'B' : {
+        url: '/',
+        module: 'b',
+        place: 'app'
+    }
+};
+
+var appSample = {
+    a: {view: function( ) { return [ m( 'h1' , 'A') , m('#child') ]; } },
+    b: { view: function( ) { return [ m( 'h1' , 'B') , m('#child') ]; } },
+    a1: {view: function( ) { return [ m( 'h1' , 'A1') , m('#subchild') ]; } }
+};
+
+/* Application root element */
+var root = document.createElement('div');
+root.setAttribute( 'id' , 'app' );
+document.body.appendChild( root );
+
+/* Route method tests */
 describe('mx.route()' , function() {
 
     it( 'should be a function' , function() {
@@ -9,13 +39,13 @@ describe('mx.route()' , function() {
     });
 
     it( 'should accept an object as 1st parameter', function() {
-        var call = function( _app_ ) { return function() { mx.route( _app_ , '' , '') } };
+        var call = function( _app_ ) { return function() { mx.route( _app_ , '' , {} ) } };
         expect( call( 'A string' ) ).toThrowError( TypeError );
         expect( call( 156 ) ).toThrowError( TypeError );
     });
 
     it( 'should accept an string as 2d parameter', function() {
-        var call = function( _initialState_ ) { return function() { mx.route( {} , _initialState_ , '' ) } };
+        var call = function( _initialState_ ) { return function() { mx.route( {} , _initialState_ , {} ) } };
         expect( call( {} ) ).toThrowError( TypeError );
         expect( call( 156 ) ).toThrowError( TypeError );
     });
@@ -26,16 +56,16 @@ describe('mx.route()' , function() {
         expect( call( 156 ) ).toThrowError( TypeError );
     });
 
-    it( 'should go to the initial state' , function() {
+    it( 'should go to the given initial state' , function() {
         var initialState = "myInitialState";
         spyOn( mx.route , 'go' );
-        mx.route( { no: 'matter' } , initialState , 'No matter' );
+        mx.route( { no: 'matter' } , initialState , {} );
         expect( mx.route.go ).toHaveBeenCalledWith( initialState );
     });
 
 });
 
-/* Go method */
+/* Go method tests */
 describe('mx.route.go()' , function() {
 
     it( 'should be a function' , function() {
@@ -50,7 +80,7 @@ describe('mx.route.go()' , function() {
 
 });
 
-/* Current method */
+/* Current method tests */
 describe('mx.route.current()' , function() {
 
     it( 'should be a function' , function() {
@@ -58,12 +88,22 @@ describe('mx.route.current()' , function() {
     });
 
     it( 'should return the current state string' , function() {
+        var currentState = 'A';
+        mx.route( appSample , currentState , routeSample );
+        expect( mx.route.current( ) ).toEqual( currentState );
 
+        currentState = 'A.A1';
+        mx.route.go( currentState );
+        expect( mx.route.current( )).toEqual( currentState );
+
+        currentState = 'B';
+        mx.route.go( currentState );
+        expect( mx.route.current( )).toEqual( currentState );
     });
 
 });
 
-/* Param method */
+/* Param method tests */
 describe('mx.route.param()' , function() {
 
     it( 'should be a function' , function() {
