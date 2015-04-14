@@ -25,11 +25,6 @@ var appSample = {
     a1: {view: function( ) { return [ m( 'h1' , 'A1') , m('#subchild') ]; } }
 };
 
-/* Application root element */
-var root = document.createElement('div');
-root.setAttribute( 'id' , 'app' );
-document.body.appendChild( root );
-
 /* Route method tests */
 describe('mx.route()' , function() {
 
@@ -94,7 +89,8 @@ describe('mx.route.current()' , function() {
     it( 'should return the current state string' , function() {
         var currentState = 'A';
         mx.route( appSample , currentState , routeSample );
-        expect( mx.route.current( ) ).toEqual( currentState );
+        mx.route.go( currentState );
+        expect( mx.route.current( ) ).toEqual( 'A' );
 
         currentState = 'A.A1';
         mx.route.go( currentState );
