@@ -31,7 +31,7 @@
          * @throws {TypeError} for non object
          */
         plainObject : function(object){
-            if(typeof object !== 'object' || object.constructor !== Object){
+            if(typeof object !== 'object' ){
                 throw new TypeError('an object is expected, but ' + object + '  [' + (typeof object) + '] given');
             }
             return object;
@@ -54,6 +54,11 @@
     var currentStateParams;
 
     /**
+     * Current url
+     */
+    var currentUrl;
+
+    /**
      * Application variable
      */
     var app;
@@ -73,7 +78,7 @@
         app             = validators.plainObject( _app_ );
         initialState    = validators.string( _initialState_ );
         routes          = validators.plainObject( _routes_ );
-        mx.route.go( initialState );
+        $listen();
     };
 
     /**
@@ -82,14 +87,14 @@
      * @param {object} _params_  The state parameters
      */
     mx.route.go = function( _state_ , _params_ ) {
-
         // Check parameters
         validators.string( _state_ );
 
         // Initial variables
         var splitState = _state_.split( '.' ),
             runningState = '',
-            runningPlace = document;
+            runningPlace = document,
+            runningUrl = '';
         currentStateParams =  _params_;
 
         // Loop over composing partial states
@@ -97,14 +102,20 @@
             runningState = runningState ? runningState + '.' + partialState : partialState;
             var configuration = routes[ runningState ],
                 module = $module(  configuration.module ),
-                place = runningPlace.querySelector( '#' + configuration.place),
+                place = runningPlace.querySelector( '#' + configuration.place ),
                 places = configuration.places,
+                url = configuration.url,
                 onEnter = configuration.onEnter;
-            runningPlace = place;
-
+            runningPlace = place || runningPlace;
+            runningUrl = url? runningUrl + url : runningUrl;
             // Set up module(s)
-            if( ! currentState || currentState.indexOf( runningState ) === -1 ) {
-                if( place ) { m.module( place , module ); }
+            if( ! currentState || currentState.indexOf( runningState ) === -1 || runningState === _state_ ) {
+                if( place ) {
+                    m.module( place , module );
+                    if( runningState !== _state_ ) {
+                        m.redraw(true);
+                    }
+                }
                 else if( places ) {
                     for( var key in places ) {
                         module = $module( places[ key ] );
@@ -116,6 +127,7 @@
             }
         });
         currentState = _state_;
+        currentUrl = window.location[mx.route.mode] = runningUrl;
     };
 
     /**
@@ -134,6 +146,49 @@
         currentStateParams = currentStateParams || {};
         return currentStateParams[ _key_ ];
     };
+
+    /**
+     * Default route mode
+     * @type {string}
+     */
+    mx.route.mode = 'hash';
+
+    /**
+     * Listen url change and go to the related state if needed
+     */
+    function $listen() {
+        var listener = mx.route.mode === "hash" ? "onhashchange" : "onpopstate";
+        window[listener] = function() {
+            var url =   mx.route.mode === "hash" ?
+                window.location[mx.route.mode].substr( 1 ):
+                window.location[mx.route.mode];
+            if( url !== currentUrl ) {
+                mx.route.go( $findState( url ) );
+            }
+        };
+        window[listener]()
+    }
+
+    /**
+     * Returns the state for a given url ( otherwise returns the initial state )
+     * @param url   the route url
+     * @returns {string} the route state
+     */
+    function $findState( url ) {
+        console.log( ' url ' , url );
+        for( var state in routes ) {
+            var splitState = state.split( '.' ),
+                runningState = '',
+                runningUrl = '';
+            splitState.forEach( function( partialState ) {
+                runningState = runningState? runningState + '.' + partialState : partialState;
+                var configurationUrl = routes[ runningState].url;
+                runningUrl = configurationUrl ? runningUrl + configurationUrl : runningUrl;
+            });
+            if( runningUrl === url ) { console.log( ' url ' , url ); return runningState; }
+        }
+        return initialState;
+    }
 
     /**
      * Extract the module from the application variable extended with the given path
