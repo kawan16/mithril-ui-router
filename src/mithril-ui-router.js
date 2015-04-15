@@ -110,8 +110,9 @@
             runningUrl = url? runningUrl + url : runningUrl;
             // Set up module(s)
             if( ! currentState || currentState.indexOf( runningState ) === -1 || runningState === _state_ ) {
+
                 if( place ) {
-                    m.module( place , module );
+                    mx.route.$install( place , module );
                     if( runningState !== _state_ ) {
                         m.redraw(true);
                     }
@@ -120,7 +121,10 @@
                     for( var key in places ) {
                         module = $module( places[ key ] );
                         place = runningPlace.querySelector( '#' + key );
-                        m.module( place , module );
+                        mx.route.$install( place , module );
+                    }
+                    if( runningState !== _state_ ) {
+                        m.redraw(true);
                     }
                 }
                 if( onEnter ) { onEnter(); }
@@ -154,6 +158,15 @@
     mx.route.mode = 'hash';
 
     /**
+     * Equivalent to m.module ( used for tests only )
+     * @param place The place
+     * @param module The module to set up
+     */
+    mx.route.$install = function( place , module ) {
+        m.module( place , module );
+    };
+
+    /**
      * Listen url change and go to the related state if needed
      */
     function $listen() {
@@ -175,7 +188,6 @@
      * @returns {string} the route state
      */
     function $findState( url ) {
-        console.log( ' url ' , url );
         for( var state in routes ) {
             var splitState = state.split( '.' ),
                 runningState = '',
@@ -185,7 +197,7 @@
                 var configurationUrl = routes[ runningState].url;
                 runningUrl = configurationUrl ? runningUrl + configurationUrl : runningUrl;
             });
-            if( runningUrl === url ) { console.log( ' url ' , url ); return runningState; }
+            if( runningUrl === url ) { return runningState; }
         }
         return initialState;
     }
