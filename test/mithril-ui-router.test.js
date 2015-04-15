@@ -25,6 +25,8 @@ var appSample = {
     a1: {view: function( ) { return [ m( 'h1' , 'A1') , m('#subchild') ]; } }
 };
 
+m.deps( mock.window );
+
 /* Route method tests */
 describe('mx.route()' , function() {
 
@@ -62,6 +64,7 @@ describe('mx.route()' , function() {
 /* Go method tests */
 describe('mx.route.go()' , function() {
 
+
     it( 'should be a function' , function() {
         expect( typeof mx.route.go ).toBe( 'function' );
     });
@@ -73,8 +76,19 @@ describe('mx.route.go()' , function() {
     });
 
     it( 'should set up the state module in its related place' , function( ) {
+        Document.prototype.querySelector = function( ) { return document.body };
+        Element.prototype.querySelector = function( ) { return document.body };
+
         mx.route( appSample , 'A' , routeSample );
+        spyOn(mx.route , '$install').and.callThrough();
+
         mx.route.go( 'B' );
+        expect( mx.route.$install.calls.argsFor( 0 )[ 1 ] ).toEqual( appSample.b );
+        mx.route.$install.calls.reset();
+
+        mx.route.go( 'A.A1' );
+        expect( mx.route.$install.calls.argsFor( 0 )[ 1 ] ).toEqual( appSample.a );
+        expect( mx.route.$install.calls.argsFor( 1 )[ 1 ] ).toEqual( appSample.a1 );
     });
 
 });
