@@ -7,7 +7,36 @@ Mithril UI router is a routing framework for MithrilJS, which allows you to orga
 
 ## Features
 
-### The `m.route` function
+### The `mx.route` function
+
+In order to define your state-based routing system, you need to specify the applicative variable into which you store your modules ( commonly a global `app` variable ), the name of your default state, and a key-value map of possible states.
+
+The example below defines four root/nested states `home` , `dashboard`, `dashboard.widgetA` and `dashboard.widgetB`. We will explain the meaning step-by-step:
+
+```js
+  mx.route( app , 'home' , {
+      'home': {
+        url: '',
+        module: 'home',
+        place: 'app'
+      },
+      'dashboard': {
+        url: '/dashboard',
+        module: 'dashboard',
+        place: 'main'
+      },
+      'dashboard.widgetA': {
+        url: '/widgetA',
+        module: 'dashboard.widgetA',
+        place: 'widget'
+      },
+      'dashboard.widgetB': {
+        url: '/widgetB',
+        module: 'dashboard.widgetB',
+        place: 'widget'
+      }
+   });
+```
 
 #### Simple state
 
@@ -17,11 +46,11 @@ Mithril UI router is a routing framework for MithrilJS, which allows you to orga
 
 #### On enter, on exit
 
-### The `m.route.go` function
+### The `mx.route.go` function
 
-### The `m.route.param` function
+### The `mx.route.param` function
 
-### The `m.route.current` function
+### The `mx.route.current` function
 
 ## Roadmap
 
