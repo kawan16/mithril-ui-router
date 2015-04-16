@@ -11,7 +11,7 @@ Mithril UI router is a routing framework for MithrilJS, which allows you to orga
 
 In order to define your state-based routing system, you need to specify the applicative variable into which you store your modules ( commonly a global `app` variable ), the name of your default state, and a key-value map of possible states.
 
-The example below defines four root/nested states `home` , `dashboard`, `dashboard.widgetA` and `dashboard.widgetB`. We will explain the meaning step-by-step:
+The example below defines four root/nested states `home` , `dashboard`, `dashboard.widgetA` and `dashboard.widgetB`:
 
 ```js
   mx.route( app , 'home' , {
@@ -39,6 +39,26 @@ The example below defines four root/nested states `home` , `dashboard`, `dashboa
 ```
 
 #### Simple state
+
+The given state `home` is a simple state. It refers to the url root of the application and basically sets up, as initial state, the module `app.home` ( specifying by `module: home` property) in the DOM element with identifier `app`. 
+
+Suppose the module `app.home`:
+```js
+ app.home = {
+    view: function() { return m( 'h1' , 'Home ! ) }
+ }
+```
+and a body of `index.html`:
+```html
+  <div id="app"> </div>
+```
+
+By accessing to the `home` state, the document will become: 
+```html
+  <div id="app">
+    <h1> Hello !</h1>
+  </div>
+```
 
 #### Nested state and view
 
