@@ -5,7 +5,7 @@ Mithril UI router is a routing framework for MithrilJS, which allows you to orga
 
 ## Get Started
 
-## Features
+## How to use it
 
 ### The `mx.route` function
 
