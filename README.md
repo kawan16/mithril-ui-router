@@ -125,6 +125,20 @@ The activation of state `main` will produce the installation of the module `app.
 
 #### On enter, on exit
 
+A state may have an `onEnter` ( respectively `onExit` ) function which will be called whenever one enters ( respectively leaves ) it. 
+
+```js
+  mx.route( app , 'main' , {
+      'main': {
+        url: '',
+        module: 'main',
+        place: 'main',
+        onEnter: function() { /* On enter */ },
+        onExit: function() { /* On exit */ }
+      }
+   });
+```
+
 ### The `mx.route.go` function
 
 ### The `mx.route.param` function
