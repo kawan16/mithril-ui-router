@@ -115,10 +115,10 @@ The activation of state `main` will produce the installation of the module `app.
 
 
 ```html
-  <div id="moduleA">
+  <div id="placeA">
     <h1> Module A </h1>
   </div>
-  <div id="moduleB">
+  <div id="placeB">
     <h1> Module B </h1>
   </div>
 ```
