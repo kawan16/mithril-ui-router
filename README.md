@@ -93,6 +93,36 @@ Given the previous conditions; the resulting Html will be:
 
 #### Multiple views
 
+A state may have different views i.e. combinations of module/place. Given: 
+
+```js
+  var app = {};
+  app.moduleA = { view: function() { return m( 'h1' , 'Module A'} );
+  app.moduleB = { view: function() { return m( 'h1' , 'Module B'} );
+
+  mx.route( app , 'main' , {
+      'main': {
+        url: '',
+        places: {
+          'placeA': 'moduleA',
+          'placeB': 'moduleB',
+        }
+      }
+   });
+```
+
+The activation of state `main` will produce the installation of the module `app.moduleA` in the element with id `placeA` while the module `app.moduleB` in the element with id `placeB`. That will output this kind of Html: 
+
+
+```html
+  <div id="moduleA">
+    <h1> Module A </h1>
+  </div>
+  <div id="moduleB">
+    <h1> Module B </h1>
+  </div>
+```
+
 #### On enter, on exit
 
 ### The `mx.route.go` function
