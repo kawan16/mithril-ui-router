@@ -45,7 +45,7 @@ The given state `home` is a simple state. It refers to the url root of the appli
 Suppose the module `app.home`:
 ```js
  app.home = {
-    view: function() { return m( 'h1' , 'Home ! ) }
+    view: function() { [ return m( 'h1' , 'Home ! ) , m( '.main' ) ] }
  }
 ```
 and a body of `index.html`:
@@ -57,10 +57,39 @@ By accessing to the `home` state, the document will become:
 ```html
   <div id="app">
     <h1> Hello !</h1>
+    <div id="main"></div>
   </div>
 ```
 
 #### Nested state and view
+
+The given state `dashboard.widgetA` is a nested state. Before setting up its configuration, the router sets up the state  `dashboard` ( if it has not already been active ). The url related to this state will be `BASE_URL/dashboard/widgetA`. The module `app.dashboard.widgetA` will be installed in the div element with id `widget`. 
+
+Suppose the module `app.home`:
+```js
+ app.dashboard = {
+    view: function() { [ return m( 'h2' , 'My dashboard' ) , m( '.widget' ) ] }
+ }
+ 
+ app.dashboard.widgetA = {
+    view: function() { [ return m( 'h3' , 'My widget A' ) ] }
+ }
+```
+
+Given the previous conditions; the resulting Html will be:
+
+```html
+  <div id="app">
+    <h1> Hello !</h1>
+    <div id="main">
+      <h2> My dashboard </h2>
+      <div id="widget">
+         <h3> My widget A </h3>
+       </div>
+    </div>
+  </div>
+```
+
 
 #### Multiple views
 
