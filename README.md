@@ -40,7 +40,7 @@ The example below defines four root/nested states `home` , `dashboard`, `dashboa
 
 #### Simple state
 
-The given state `home` is a simple state. It refers to the url root of the application and basically sets up, as initial state, the module `app.home` ( specifying by `module: home` property) in the DOM element with identifier `app`. 
+The given state `home` is a simple state. It refers to the url root of the application and basically sets up, as initial state, the module `app.home` ( specifying by `module: 'home'` property) in the DOM element with identifier `app` ( given by `place: 'app'`) . 
 
 Suppose the module `app.home`:
 ```js
