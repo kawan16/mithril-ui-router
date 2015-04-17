@@ -56,7 +56,10 @@ module.exports = function (grunt) {
                     ]
                 },
                 options: {
-                    mangle:false
+                    mangle:false,
+                    sourceMap: '<%= config.dist %>/mithril-ui-router.js.map',
+                    sourceMapRoot: 'http://localhost/',
+                    banner: '/*! <%= grunt.template.today("yyyy-mm-dd") %> */\n'
                 }
             }
         },
