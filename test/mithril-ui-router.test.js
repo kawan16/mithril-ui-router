@@ -1,6 +1,7 @@
 
 /* global describe, it, expect */
 
+
 /* Data sample */
 var routeSample = {
     'A' : {
@@ -91,6 +92,23 @@ describe('mx.route.go()' , function() {
         expect( mx.route.$install.calls.argsFor( 1 )[ 1 ] ).toEqual( appSample.a1 );
     });
 
+    it( 'should call the onEnter function when its state is active' , function( ) {
+        routeSample['B'].onEnter = function() {};
+        spyOn( routeSample['B'] , 'onEnter' ).and.callThrough();
+        mx.route( appSample , 'A' , routeSample );
+        mx.route.go( 'B' );
+        expect( routeSample['B'].onEnter ).toHaveBeenCalled();
+    });
+
+    it( 'should call the onEnter function when its state is active' , function( ) {
+        routeSample['B'].onExit = function() {};
+        spyOn( routeSample['B'] , 'onExit' ).and.callThrough();
+        mx.route( appSample , 'A' , routeSample );
+        mx.route.go( 'B' );
+        mx.route.go( 'A' );
+        expect( routeSample['B'].onExit ).toHaveBeenCalled();
+    });
+
 });
 
 /* Current method tests */
@@ -133,3 +151,4 @@ describe('mx.route.param()' , function() {
     });
 
 });
+

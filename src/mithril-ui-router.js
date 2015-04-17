@@ -87,8 +87,15 @@
      * @param {object} _params_  The state parameters
      */
     mx.route.go = function( _state_ , _params_ ) {
+
         // Check parameters
         validators.string( _state_ );
+
+        // Exit the current state
+        if( currentState ) {
+            var onExit = routes[ currentState ].onExit;
+            if( onExit ) { onExit(); }
+        }
 
         // Initial variables
         var splitState = _state_.split( '.' ),
