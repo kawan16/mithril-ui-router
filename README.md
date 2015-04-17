@@ -5,6 +5,16 @@ Mithril UI router is a routing framework for MithrilJS, which allows you to orga
 
 ## Get Started
 
+One way to use Mithril Ui Router: download this project, get the `dist` folder files and link to mithril and mithril ui router in the head of your app:
+
+```html
+<head>
+    <meta charset="utf-8">
+    <script src="mithril.js"></script>
+    <script src="mithril-ui-router.js"></script>
+</head>
+```
+
 ## How to use it
 
 ### The `mx.route` function
