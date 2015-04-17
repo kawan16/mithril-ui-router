@@ -141,6 +141,22 @@ A state may have an `onEnter` ( respectively `onExit` ) function which will be c
 
 ### The `mx.route.go` function
 
+Whenever you intends to access to a new state in your application, you needs to use the `mx.route.go` function. This function takes the state to go and the passing state parameters. 
+
+The example below defines a link in module which goes to a new state and passes some parameter whenever it is clicked:
+
+```js
+  var app.module = {};
+  app.module.view = function() {
+    return [
+      m( 'h1' , 'Use of mx.route.go function' ),
+      m( 'a' , {
+        onclick: function() { mx.route.go( 'someNewState' , { some: 'passing' , parameters: '!' } )}
+      })
+    ]
+  }
+```
+
 ### The `mx.route.param` function
 
 ### The `mx.route.current` function
