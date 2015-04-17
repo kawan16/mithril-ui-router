@@ -151,7 +151,7 @@ The example below defines a link in module which goes to a new state and passes 
     return [
       m( 'h1' , 'Use of mx.route.go function' ),
       m( 'a' , {
-        onclick: function() { mx.route.go( 'someNewState' , { some: 'passing' , parameters: '!' } )}
+        onclick: function() { mx.route.go( 'someNewState' , { some: 'passing' , parameters: 156 } )}
       })
     ]
   }
@@ -159,7 +159,21 @@ The example below defines a link in module which goes to a new state and passes 
 
 ### The `mx.route.param` function
 
+The `mx.route.param` function allows the user to get state parameters. Basically, it takes a key and returns the value. Given the previous `mx.route.go` example in the state `someNewState` :
+
+```js
+  mx.route.param( 'some'); // Equals to 'passing'
+  mx.route.param( 'parameters'); // Equals to 156
+```
+
 ### The `mx.route.current` function
+
+The `mx.route.current` function returns the current state of the application. Given the previous `mx.route.go` example:
+
+```js
+  mx.route.go( 'someNewState'); 
+  mx.route.current(); // Equals to  'someNewState'
+```
 
 ## Roadmap
 
