@@ -175,6 +175,5 @@ The `mx.route.current` function returns the current state of the application. Gi
   mx.route.current(); // Equals to  'someNewState'
 ```
 
-## Roadmap
 
 
