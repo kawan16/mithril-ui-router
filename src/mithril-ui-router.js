@@ -41,7 +41,7 @@
     /*
      * Initial state of application
      */
-    var initialState;
+    var defaultState;
 
     /**
      * Current state of application
@@ -71,12 +71,12 @@
     /*
      * Define the application routes
      * @param {object} _app_             The global application variable
-     * @param {string} _initialState_    The initial state
+     * @param {string} _defaultState_    The initial state
      * @param {object} _routes_          The routes object
      */
-    mx.route = function( _app_ , _initialState_ , _routes_ ) {
+    mx.route = function( _app_ , _defaultState_ , _routes_ ) {
         app             = validators.plainObject( _app_ );
-        initialState    = validators.string( _initialState_ );
+        defaultState    = validators.string( _defaultState_ );
         routes          = validators.plainObject( _routes_ );
         $listen();
     };
@@ -117,8 +117,8 @@
             runningUrl = url? runningUrl + url : runningUrl;
             // Set up module(s)
             if( ! currentState || currentState.indexOf( runningState ) === -1 || runningState === _state_ ) {
-
                 if( place ) {
+                    console.log( ' install ' , place , ' ' , module.view ) ;
                     mx.route.$install( place , module );
                     if( runningState !== _state_ ) {
                         m.redraw(true);
@@ -206,7 +206,7 @@
             });
             if( runningUrl === url ) { return runningState; }
         }
-        return initialState;
+        return defaultState;
     }
 
     /**
