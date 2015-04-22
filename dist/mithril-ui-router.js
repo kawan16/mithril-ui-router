@@ -118,7 +118,6 @@
             // Set up module(s)
             if( ! currentState || currentState.indexOf( runningState ) === -1 || runningState === _state_ ) {
                 if( place ) {
-                    console.log( ' install ' , place , ' ' , module.view ) ;
                     mx.route.$install( place , module );
                     if( runningState !== _state_ ) {
                         m.redraw(true);
@@ -138,6 +137,11 @@
             }
         });
         currentState = _state_;
+        // Update url
+        for( var key in _params_ ) {
+            console.log( ' test ');
+            runningUrl = runningUrl.replace( ":" + key , _params_[key] ) ;
+        }
         currentUrl = window.location[mx.route.mode] = runningUrl;
     };
 
@@ -183,14 +187,15 @@
                 window.location[mx.route.mode].substr( 1 ):
                 window.location[mx.route.mode];
             if( url !== currentUrl ) {
-                mx.route.go( $findState( url ) );
+                var foundState = $findState( url );
+                mx.route.go( foundState.state , foundState.parameters );
             }
         };
         window[listener]()
     }
 
     /**
-     * Returns the state for a given url ( otherwise returns the initial state )
+     * Returns the state and state parameters for a given url ( otherwise returns the initial state )
      * @param url   the route url
      * @returns {string} the route state
      */
@@ -204,9 +209,43 @@
                 var configurationUrl = routes[ runningState].url;
                 runningUrl = configurationUrl ? runningUrl + configurationUrl : runningUrl;
             });
-            if( runningUrl === url ) { return runningState; }
+            var instanceParameters = $instantiateUrlWith( runningUrl , url );
+            if( instanceParameters ) {
+                return {
+                    state: runningState,
+                    parameters: instanceParameters
+                };
+            }
         }
-        return defaultState;
+        return {
+            state: defaultState,
+            parameters: {}
+        };
+    }
+
+    /**
+     * Attempt to instantiate a state url ( with variables ) with the given url
+     * and returns the key value state parameters that match.
+     * @param fromUrla The state url
+     * @param toUrl The concrete url
+     */
+    function $instantiateUrlWith( fromUrl , toUrl ) {
+        var splitFromUrl = fromUrl.split('/'),
+            splitToUrl = toUrl.split('/'),
+            parameters = {};
+        if( splitFromUrl.length === splitToUrl.length ) {
+            // Match path variables to values
+            for( var i = 0 ; i < splitFromUrl.length ; i++ ) {
+                if( splitFromUrl[ i ] !== splitToUrl[ i ] && splitFromUrl[ i ][ 0 ] === ':' ) {
+                    parameters[ splitFromUrl[ i ].substr( 1 ) ] = splitToUrl[ i ];
+                }
+            }
+        }
+        else {
+            return false;
+        }
+        return parameters;
+
     }
 
     /**
