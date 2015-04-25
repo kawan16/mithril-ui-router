@@ -57,7 +57,7 @@ describe('mx.route()' , function() {
         var initialState = "myInitialState";
         spyOn( mx.route , 'go' );
         mx.route( { no: 'matter' } , initialState , {} );
-        expect( mx.route.go ).toHaveBeenCalledWith( initialState );
+        expect( mx.route.go ).toHaveBeenCalledWith(  initialState , {} );
     });
 
 });
