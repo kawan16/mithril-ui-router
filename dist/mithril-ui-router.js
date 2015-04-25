@@ -139,7 +139,6 @@
         currentState = _state_;
         // Update url
         for( var key in _params_ ) {
-            console.log( ' test ');
             runningUrl = runningUrl.replace( ":" + key , _params_[key] ) ;
         }
         currentUrl = window.location[mx.route.mode] = runningUrl;
