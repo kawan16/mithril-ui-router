@@ -133,6 +133,25 @@ The activation of state `main` will produce the installation of the module `app.
   </div>
 ```
 
+#### Path variable
+
+The url of a state may contain path variable such as an item identifier. For instance. :
+
+```js
+    
+    // Suppose some app variable, main and other states
+     mx.route( app , 'main' , {
+        // 
+        'one': {
+            url: /one/:id',
+            module: 'someModule',
+            place: 'somePlace'
+        }
+      }
+   });
+```
+In this example, the path variable can come from the user typing or by passing the state parameter `id` whenever we go to the state  `one` via  `mx.router.go( 'one' , {id: '12'})` for example.
+
 #### On enter, on exit
 
 A state may have an `onEnter` ( respectively `onExit` ) function which will be called whenever one enters ( respectively leaves ) it. 
