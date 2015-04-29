@@ -130,7 +130,7 @@ var app = {
     about:      about
 }
 
-mx.route( app , 'main' , {
+mx.route( app , 'main.home' , {
     'main' : {
         url:        '',
         place:      'app',
