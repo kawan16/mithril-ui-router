@@ -132,7 +132,6 @@ var app = {
 
 mx.route( app , 'main.home' , {
     'main' : {
-        url:        '',
         place:      'app',
         module:     'main'
     },
