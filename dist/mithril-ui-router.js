@@ -199,6 +199,12 @@
      * @returns {string} the route state
      */
     function $findState( url ) {
+        if( ! url ) {
+            return {
+                state: defaultState,
+                parameters: {}
+            };
+        }
         for( var state in routes ) {
             var splitState = state.split( '.' ),
                 runningState = '',
