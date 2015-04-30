@@ -111,10 +111,10 @@ about.view = function() {
     return [
         m( '.ui.hidden.divider' ),
         m( '.ui.centered.grid',
-           m( '.twelve.wide.column'  ,
+           m( '.sixteen.wide.column'  ,
                 m( 'h3' , 'About this application' )
            ),
-           m( '.twelve.wide.column'  ,
+           m( '.sixteen.wide.column'  ,
                m( 'p' , 'This Mithril application shows Mithril Ui Router in action. Take a look at the source code to see how it works.' )
            )
         ),
