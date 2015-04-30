@@ -3,11 +3,13 @@
 var contactData = [
     {
         name: 'Alice',
-        email: 'alice@wonderland.com'
+        email: 'alice@wonderland.com',
+        phone: '12 56 898 778'
     },
     {
         name: 'Bob',
-        email: 'bob@sponge.com'
+        email: 'bob@sponge.com',
+        phone: '78 96 458 587'
     }
 ];
 
@@ -73,9 +75,14 @@ var home = {};
 home.view = function() {
     return [
         m( '.ui.hidden.divider' ),
-        m( 'h3' , 'Welcome to the Mithril UI Router' ),
-        m( '.ui.hidden.divider' ),
-        m( 'h5' , 'Use the above menu to navigate through the application state. Take a look below this area and see the state information.' ),
+        m( '.ui.centered.grid',
+           m( '.sixteen.wide.column'  ,
+                  m( 'h3' , 'Welcome to the Mithril UI Router' )
+           ),
+           m( '.sixteen.wide.column'  ,
+                m( 'p' , 'Use the above menu to navigate through the application state. Take a look below this area and see the state information.' )
+           )
+        ),
         m( '.ui.hidden.divider' )
     ]
 }
@@ -88,12 +95,18 @@ contact.view = function() {
         m( '.ui.centered.grid',
             m( '.sixteen.wide.column'  ,
                 m( '.ui.list' ,
-                    contactData.map( function ( contact ) {
+                    contactData.map( function ( contact , index ) {
                         return [
                             m( '.item' ,
                                 m( 'i' , { class: 'right triangle icon' } ),
                                 m( '.content' ,
-                                    m( 'a' , { class: 'header' }, contact.name )
+                                    m( 'a' ,
+                                        {
+                                            class: 'header',
+                                            onclick: function( ) { mx.route.go( 'main.contact.one' , { id: index } )}
+                                        },
+                                        contact.name
+                                    )
                                 )
                             )
                         ][0]
@@ -102,7 +115,29 @@ contact.view = function() {
                 )
             )
         ),
+        m( '.ui.divider' ),
+        m( '#one' )
+    ]
+}
+
+var oneContact = {};
+oneContact.controller = function( ) {
+    this.contact = m.prop( contactData[ mx.route.param( 'id' ) ] );
+}
+oneContact.view = function( controller ) {
+    return [
+        m( '.ui.hidden.divider' ),
+        m( '.ui.centered.grid',
+            m( '.sixteen.wide.column'  ,
+               m( 'h3' , controller.contact().name )
+            ),
+            m( '.one.wide.column'  , m( 'h5' , 'Email:' ) ),
+            m( '.fifteen.wide.column'  , m( 'h5' , controller.contact().email ) ),
+            m( '.one.wide.column'  , m( 'h5' , 'Phone:' ) ),
+            m( '.fifteen.wide.column'  , m( 'h5' , controller.contact().phone ) )
+        ),
         m( '.ui.hidden.divider' )
+
     ]
 }
 
@@ -127,6 +162,7 @@ var app = {
     main:       main,
     home:       home,
     contact:    contact,
+    oneContact: oneContact,
     about:      about
 }
 
@@ -144,6 +180,11 @@ mx.route( app , 'main.home' , {
         url:        '/contact',
         place:      'content',
         module:     'contact'
+    },
+    'main.contact.one' : {
+        url:        '/:id',
+        place:      'one',
+        module:     'oneContact'
     },
     'main.about' : {
         url:        '/about',
