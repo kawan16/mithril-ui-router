@@ -14,6 +14,9 @@ One way to use Mithril Ui Router: download this project, get the `dist` folder f
     <script src="mithril-ui-router.js"></script>
 </head>
 ```
+## Demo
+
+Take a look at this basic [demo](http://kawan16.github.io/mithril-ui-router) and see Mithril Ui Router in action.
 
 ## How to use it
 
