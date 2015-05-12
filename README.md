@@ -208,4 +208,13 @@ The `mx.route.current` function returns the current state of the application. Gi
 ```
 
 
+## History
+
+* 0.1.0 - Initial Release
+
+## License
+
+Licensed under the MIT license.
+
+
 
