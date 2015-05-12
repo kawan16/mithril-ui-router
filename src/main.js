@@ -168,27 +168,27 @@ var app = {
 
 mx.route( app , 'main.home' , {
     'main' : {
-        place:      'app',
+        place:      '#app',
         module:     'main'
     },
      'main.home' : {
         url:        '/home',
-        place:      'content',
+        place:      '#content',
         module:     'home'
     },
     'main.contact' : {
         url:        '/contact',
-        place:      'content',
+        place:      '#content',
         module:     'contact'
     },
     'main.contact.one' : {
         url:        '/:id',
-        place:      'one',
+        place:      '#one',
         module:     'oneContact'
     },
     'main.about' : {
         url:        '/about',
-        place:      'content',
+        place:      '#content',
         module:     'about'
     }
 });
