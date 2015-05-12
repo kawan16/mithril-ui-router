@@ -213,7 +213,7 @@ The `mx.route.current` function returns the current state of the application. Gi
 ## History
 
 * 0.1.0 - Initial Release
-  * 0.1.1 Fix #1 / Extension of place identification
+  * 0.1.1 Fix [#1](https://github.com/kawan16/mithril-ui-router/issues/1) / Extension of place identification
 
 ## License
 
