@@ -126,7 +126,7 @@
                 else if( places ) {
                     for( var key in places ) {
                         module = $module( places[ key ] );
-                        place = runningPlace.querySelector( '#' + key );
+                        place = runningPlace.querySelector( key );
                         mx.route.$install( place , module );
                     }
                     if( runningState !== _state_ ) {
