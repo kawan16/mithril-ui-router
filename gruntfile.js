@@ -1,3 +1,4 @@
+
 // Generated on 2013-07-16 using generator-angular 0.3.0
 'use strict';
 
@@ -69,7 +70,7 @@ module.exports = function (grunt) {
             src: [
                 '<%= config.lib %>/mithril/mithril.js' ,
                 '<%= config.lib %>/mithril/mock.js' ,
-                '<%= config.src %>/mithril-ui-router.js'
+                '<%= config.src %>/mithril-storage.js'
             ],
             options: {
                 specs : '<%= config.test %>/**/*.js'

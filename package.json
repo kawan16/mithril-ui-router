@@ -1,6 +1,6 @@
 {
   "name": "mithril-ui-router",
-  "description": "A state-based router for Mithril.js",
+  "description": "A storage library for Mithril.js",
   "version": "0.0.1",
   "author": {
     "name": "Karl Devooght",
@@ -9,9 +9,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/krampstudio/mithril-ui-router.git"
+    "url": "https://github.com/krampstudio/mithril-storage.git"
   },
-  "main": "src/mithril-ui-router.js",
+  "main": "src/mithril-storage.js",
   "scripts": {
     "test": "grunt test"
   },
@@ -26,6 +26,7 @@
   },
   "keywords": [
     "mithril",
-    "router"
+    "storage",
+    "localstorage"
   ]
 }
