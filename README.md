@@ -31,29 +31,31 @@ The example below defines four root/nested states `home` , `dashboard`, `dashboa
       'home': {
         url: '',
         module: 'home',
-        place: 'app'
+        place: '#app'
       },
       'dashboard': {
         url: '/dashboard',
         module: 'dashboard',
-        place: 'main'
+        place: '#main'
       },
       'dashboard.widgetA': {
         url: '/widgetA',
         module: 'dashboard.widgetA',
-        place: 'widget'
+        place: '#widget'
       },
       'dashboard.widgetB': {
         url: '/widgetB',
         module: 'dashboard.widgetB',
-        place: 'widget'
+        place: '#widget'
       }
    });
 ```
 
 #### Simple state
 
-The given state `home` is a simple state. It refers to the url root of the application and basically sets up, as initial state, the module `app.home` ( specifying by `module: 'home'` property) in the DOM element with identifier `app` ( given by `place: 'app'`) . 
+The given state `home` is a simple state. It refers to the url root of the application and basically sets up, as initial state, the module `app.home` ( specifying by `module: 'home'` property) in the DOM element identified with `#app` ( given by `place: '#app'`). 
+
+Places can be identified DOM elements as those found by the [`document.querySelector`](https://developer.mozilla.org/fr/docs/Web/API/Document/querySelector). That means that you can select places by tag name ( eg, 'div' ), id ( eg, '#app' ) or class ( eg, '.myclass' ) for instance.
 
 Suppose the module `app.home`:
 ```js
@@ -117,8 +119,8 @@ A state may have different views i.e. combinations of module/place. Given:
       'main': {
         url: '',
         places: {
-          'placeA': 'moduleA',
-          'placeB': 'moduleB',
+          '#placeA': 'moduleA',
+          '#placeB': 'moduleB',
         }
       }
    });
@@ -148,7 +150,7 @@ The url of a state may contain path variable such as an item identifier. For ins
         'one': {
             url: /one/:id',
             module: 'someModule',
-            place: 'somePlace'
+            place: '#somePlace'
         }
       }
    });
@@ -164,7 +166,7 @@ A state may have an `onEnter` ( respectively `onExit` ) function which will be c
       'main': {
         url: '',
         module: 'main',
-        place: 'main',
+        place: '#main',
         onEnter: function() { /* On enter */ },
         onExit: function() { /* On exit */ }
       }
@@ -211,6 +213,7 @@ The `mx.route.current` function returns the current state of the application. Gi
 ## History
 
 * 0.1.0 - Initial Release
+  * 0.1.1 Fix #1 / Extension of place identification
 
 ## License
 
