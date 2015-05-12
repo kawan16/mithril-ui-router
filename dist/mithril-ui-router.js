@@ -109,7 +109,7 @@
             runningState = runningState ? runningState + '.' + partialState : partialState;
             var configuration = routes[ runningState ],
                 module = $module(  configuration.module ),
-                place = runningPlace.querySelector( '#' + configuration.place ),
+                place = runningPlace.querySelector( configuration.place ),
                 places = configuration.places,
                 url = configuration.url,
                 onEnter = configuration.onEnter;
@@ -126,7 +126,7 @@
                 else if( places ) {
                     for( var key in places ) {
                         module = $module( places[ key ] );
-                        place = runningPlace.querySelector( '#' + key );
+                        place = runningPlace.querySelector( key );
                         mx.route.$install( place , module );
                     }
                     if( runningState !== _state_ ) {
