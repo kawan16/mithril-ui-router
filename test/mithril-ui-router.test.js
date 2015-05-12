@@ -7,16 +7,16 @@ var routeSample = {
     'A' : {
         url: '/',
         module: 'a',
-        place: 'app'
+        place: '#app'
     },
     'A.A1' : {
         module: 'a1',
-        place: 'child'
+        place: '#child'
     },
     'B' : {
         url: '/',
         module: 'b',
-        place: 'app'
+        place: '#app'
     }
 };
 
