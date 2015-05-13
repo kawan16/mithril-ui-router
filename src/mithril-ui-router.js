@@ -1,5 +1,5 @@
 
-/* global m */
+/* global m, mx */
 
 ;( function( m ) {
 
@@ -125,9 +125,11 @@
                 }
                 else if( places ) {
                     for( var key in places ) {
-                        module = $module( places[ key ] );
-                        place = runningPlace.querySelector( key );
-                        mx.route.$install( place , module );
+                        if ( places.hasOwnProperty( key ) ) {
+                            module = $module( places[ key ] );
+                            place = runningPlace.querySelector( key );
+                            mx.route.$install( place , module );
+                        }
                     }
                     if( runningState !== _state_ ) {
                         m.redraw(true);
@@ -139,7 +141,9 @@
         currentState = _state_;
         // Update url
         for( var key in _params_ ) {
-            runningUrl = runningUrl.replace( ":" + key , _params_[key] ) ;
+            if ( _params_.hasOwnProperty( key ) ) {
+                runningUrl = runningUrl.replace( ":" + key , _params_[key] ) ;
+            }
         }
         currentUrl = window.location[mx.route.mode] = runningUrl;
     };
@@ -191,7 +195,7 @@
                 mx.route.go( foundState.state , foundState.parameters );
             }
         };
-        window[listener]()
+        window[listener]();
     }
 
     /**
@@ -207,20 +211,22 @@
             };
         }
         for( var state in routes ) {
-            var splitState = state.split( '.' ),
-                runningState = '',
-                runningUrl = '';
-            splitState.forEach( function( partialState ) {
-                runningState = runningState? runningState + '.' + partialState : partialState;
-                var configurationUrl = routes[ runningState].url;
-                runningUrl = configurationUrl ? runningUrl + configurationUrl : runningUrl;
-            });
-            var instanceParameters = $instantiateUrlWith( runningUrl , url );
-            if( instanceParameters ) {
-                return {
-                    state: runningState,
-                    parameters: instanceParameters
-                };
+            if ( routes.hasOwnProperty( state ) ) {
+                var splitState = state.split( '.' ),
+                    runningState = '',
+                    runningUrl = '';
+                splitState.forEach( function( partialState ) {
+                    runningState = runningState? runningState + '.' + partialState : partialState;
+                    var configurationUrl = routes[ runningState].url;
+                    runningUrl = configurationUrl ? runningUrl + configurationUrl : runningUrl;
+                });
+                var instanceParameters = $instantiateUrlWith( runningUrl , url );
+                if( instanceParameters ) {
+                    return {
+                        state: runningState,
+                        parameters: instanceParameters
+                    };
+                }
             }
         }
         return {
