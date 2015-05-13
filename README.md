@@ -8,7 +8,7 @@ Mithril UI router is a routing framework for MithrilJS, which allows you to orga
 
 ## Get Started
 
-One way to use Mithril Ui Router: download this project, get the `dist` folder files and link to mithril and mithril ui router in the head of your app:
+One way to use Mithril Ui Router:  download this project, get the `dist` folder files and link to mithril and mithril ui router in the head of your app:
 
 ```html
 <head>
