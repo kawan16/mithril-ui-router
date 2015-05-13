@@ -1,5 +1,8 @@
-Mithril UI Router [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+Mithril UI Router 
 =================
+
+[![Code Climate](https://codeclimate.com/github/kawan16/mithril-ui-router/badges/gpa.svg)](https://codeclimate.com/github/kawan16/mithril-ui-router)
+
 
 Mithril UI router is a routing framework for MithrilJS, which allows you to organize your interface into a state machine in the similar way than [AngularUI Router](https://github.com/angular-ui/ui-router) does for AngularJS. So, unlike the `m.route` service in the which is organized around URL routes, Mithril UI router is organized around states, which may optionally have routes.
 
