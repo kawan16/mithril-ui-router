@@ -1,11 +1,12 @@
 
 /* global m, mx */
 
-;( function( m ) {
+;
+var mx_factory = function( m ) {
 
     'use strict';
 
-    window.mx = window.mx ||  {};
+    var mx = {};
 
     /*
      * Validators for router function
@@ -277,4 +278,10 @@
         return result;
     };
 
-}) ( m );
+    return mx;
+
+};
+
+
+if (typeof window !== "undefined" && m) window.mx = mx_factory(m);
+if (typeof module !== "undefined" && module !== null && module.exports) module.exports = function(m) { return m ? mx_factory(m) : null; };
