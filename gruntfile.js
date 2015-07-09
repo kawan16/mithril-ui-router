@@ -69,6 +69,7 @@ module.exports = function (grunt) {
             src: [
                 '<%= config.lib %>/mithril/mithril.js' ,
                 '<%= config.lib %>/mithril/mock.js' ,
+                '<%= config.lib %>/mock.module.js' ,
                 '<%= config.src %>/mithril-ui-router.js'
             ],
             options: {

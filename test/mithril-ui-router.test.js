@@ -151,4 +151,3 @@ describe('mx.route.param()' , function() {
     });
 
 });
-
