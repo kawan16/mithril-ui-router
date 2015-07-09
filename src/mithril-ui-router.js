@@ -1,9 +1,7 @@
 
 /* global m, mx */
 
-;
 var mx_factory = function( m ) {
-
     'use strict';
 
     var mx = {};

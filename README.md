@@ -17,6 +17,13 @@ One way to use Mithril Ui Router:  download this project, get the `dist` folder 
     <script src="mithril-ui-router.js"></script>
 </head>
 ```
+
+You can use with Node.js in this way:
+
+```js
+    var mx = require( 'mithril-ui-router' );
+```
+
 ## Demo
 
 Take a look at this basic [demo](http://kawan16.github.io/mithril-ui-router) and see Mithril Ui Router in action.
