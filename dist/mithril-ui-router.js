@@ -100,8 +100,10 @@ var mx_factory = function( m ) {
         var splitState = _state_.split( '.' ),
             runningState = '',
             runningPlace = document,
-            runningUrl = '';
+            runningUrl = '',
+            previousState = currentState;
         currentStateParams =  _params_;
+        currentState = _state_;
 
         // Loop over composing partial states
         splitState.forEach( function( partialState ) {
@@ -115,29 +117,29 @@ var mx_factory = function( m ) {
             runningPlace = place || runningPlace;
             runningUrl = url? runningUrl + url : runningUrl;
             // Set up module(s)
-            if( ! currentState || currentState.indexOf( runningState ) === -1 || runningState === _state_ ) {
-                if( place ) {
-                    mx.route.$install( place , module );
-                    if( runningState !== _state_ ) {
-                        m.redraw(true);
-                    }
+
+            if( place ) {
+                mx.route.$install( place , module );
+                if( runningState !== _state_ ) {
+                    m.redraw(true);
                 }
-                else if( places ) {
-                    for( var key in places ) {
-                        if ( places.hasOwnProperty( key ) ) {
-                            module = $module( places[ key ] );
-                            place = runningPlace.querySelector( key );
-                            mx.route.$install( place , module );
-                        }
-                    }
-                    if( runningState !== _state_ ) {
-                        m.redraw(true);
-                    }
-                }
-                if( onEnter ) { onEnter(); }
             }
+            else if( places ) {
+                for( var key in places ) {
+                    if ( places.hasOwnProperty( key ) ) {
+                        module = $module( places[ key ] );
+                        place = runningPlace.querySelector( key );
+                        mx.route.$install( place , module );
+                    }
+                }
+                if( runningState !== _state_ ) {
+                    m.redraw(true);
+                }
+            }
+            if( onEnter ) { onEnter(); }
+
         });
-        currentState = _state_;
+
         // Update url
         for( var key in _params_ ) {
             if ( _params_.hasOwnProperty( key ) ) {
@@ -145,6 +147,7 @@ var mx_factory = function( m ) {
             }
         }
         currentUrl = window.location[mx.route.mode] = runningUrl;
+
     };
 
     /**
@@ -176,14 +179,15 @@ var mx_factory = function( m ) {
      * @param module The module to set up
      */
     mx.route.$install = function( place , module ) {
-        m.mount( place , module );
+        var controller = module.controller ? new module.controller() : undefined;
+        m.render( place , module.view( controller ) , true );
+        m.redraw( true );
     };
 
     /**
      * Listen url change and go to the related state if needed
      */
     function $listen() {
-
         var listener = mx.route.mode === "hash" ? "onhashchange" : "onpopstate";
         window[listener] = function() {
             var url =   mx.route.mode === "hash" ?
@@ -283,6 +287,6 @@ var mx_factory = function( m ) {
 
 if (typeof window !== "undefined" && m) window.mx = mx_factory(m);
 if (typeof module !== "undefined" && module !== null && module.exports) {
-  var m = require('mithril');
-  module.exports = mx_factory(m);
+    var m = require('mithril');
+    module.exports = mx_factory(m);
 }
