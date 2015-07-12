@@ -34,9 +34,9 @@ if (!Object.keys) {
 
 var mock = {}
 mock.window = (function() {
-	var window = {};
-	window.document = {};
-	window.document.childNodes = [];
+	var window = {}
+	window.document = {}
+	window.document.childNodes = []
 	window.document.createElement = function(tag) {
 		return {
 			style: {},

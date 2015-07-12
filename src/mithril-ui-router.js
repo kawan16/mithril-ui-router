@@ -176,7 +176,7 @@ var mx_factory = function( m ) {
      * @param module The module to set up
      */
     mx.route.$install = function( place , module ) {
-        m.module( place , module );
+        m.mount( place , module );
     };
 
     /**

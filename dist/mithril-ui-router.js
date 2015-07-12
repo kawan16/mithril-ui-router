@@ -1,9 +1,7 @@
 
 /* global m, mx */
 
-;
 var mx_factory = function( m ) {
-
     'use strict';
 
     var mx = {};
@@ -178,7 +176,7 @@ var mx_factory = function( m ) {
      * @param module The module to set up
      */
     mx.route.$install = function( place , module ) {
-        m.module( place , module );
+        m.mount( place , module );
     };
 
     /**
@@ -284,4 +282,7 @@ var mx_factory = function( m ) {
 
 
 if (typeof window !== "undefined" && m) window.mx = mx_factory(m);
-if (typeof module !== "undefined" && module !== null && module.exports) module.exports = function(m) { return m ? mx_factory(m) : null; };
+if (typeof module !== "undefined" && module !== null && module.exports) {
+  var m = require('mithril');
+  module.exports = mx_factory(m);
+}
