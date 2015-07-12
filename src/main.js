@@ -44,7 +44,7 @@ menu.view = function( controller ) {
 };
 
 var state = {};
-state.view = function() {
+state.view = function( ) {
     return [
         m( '.ui.segment' ,
             m( '.ui.hidden.divider' ),
@@ -52,11 +52,12 @@ state.view = function() {
             m( '.ui.hidden.divider' )
         )
     ]
-}
+};
 
 
 var main = {};
 main.view = function( controller ) {
+    console.log( 'main view' );
     return [
         m( '.ui.hidden.divider' ),
         m( '.ui.page.grid',
@@ -64,7 +65,7 @@ main.view = function( controller ) {
             m( '.ui.hidden.divider' ),
             m( '.ui.segment', m( '#content' ) ),
             m( '.ui.hidden.divider' ),
-            state.view( controller )
+            state.view(  )
         ),
 
     ];
@@ -123,7 +124,7 @@ contact.view = function() {
 var oneContact = {};
 oneContact.controller = function( ) {
     this.contact = m.prop( contactData[ mx.route.param( 'id' ) ] );
-}
+};
 oneContact.view = function( controller ) {
     return [
         m( '.ui.hidden.divider' ),
