@@ -181,7 +181,6 @@ var mx_factory = function( m ) {
     mx.route.$install = function( place , module ) {
         var controller = module.controller ? new module.controller() : undefined;
         m.render( place , module.view( controller ) , true );
-        m.redraw( true );
     };
 
     /**
