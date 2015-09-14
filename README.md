@@ -70,7 +70,7 @@ Places can be identified DOM elements as those found by the [`document.querySele
 Suppose the module `app.home`:
 ```js
  app.home = {
-    view: function() { [ return m( 'h1' , 'Home ! ) , m( '.main' ) ] }
+    view: function() { [ return m( 'h1' , 'Home !' ) , m( '.main' ) ] }
  }
 ```
 and a body of `index.html`:
@@ -156,9 +156,8 @@ The url of a state may contain path variable such as an item identifier. For ins
     
     // Suppose some app variable, main and other states
      mx.route( app , 'main' , {
-        // 
         'one': {
-            url: /one/:id',
+            url: '/one/:id',
             module: 'someModule',
             place: '#somePlace'
         }
